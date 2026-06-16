@@ -5510,7 +5510,21 @@ function filter(val, type) {
 &lt;/html&gt;
 "></iframe>
 
+</div>
 
+<script>
+function showTab(index) {
+    const buttons = document.querySelectorAll('.tab-btn');
+    const frames = document.querySelectorAll('.tab-frame');
+
+    buttons.forEach(btn => btn.classList.remove('active'));
+    frames.forEach(frame => frame.classList.remove('active'));
+
+    buttons[index].classList.add('active');
+    frames[index].classList.add('active');
+}
+
+    
 <iframe srcdoc="<!DOCTYPE html>
 <html lang=&quot;pt-BR&quot;>
 <head>
@@ -13435,21 +13449,7 @@ h1{font-family:'Share Tech Mono',monospace;font-size:22px;letter-spacing:4px;col
 " width="100%" height="600px" frameborder="0"></iframe>
 
 
-
-
-</div>
-
-<script>
-function showTab(index) {
-    const buttons = document.querySelectorAll('.tab-btn');
-    const frames = document.querySelectorAll('.tab-frame');
-
-    buttons.forEach(btn => btn.classList.remove('active'));
-    frames.forEach(frame => frame.classList.remove('active'));
-
-    buttons[index].classList.add('active');
-    frames[index].classList.add('active');
-}
+    
 </script>
 
 </body>
