@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compêndio DigiRPG</title>
+    <style>
+        /* Visual Escuro Estilo RPG */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: #1e1e1e; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); overflow: hidden; }
+        
+        /* Menu de Abas */
+        .tabs { display: flex; background: #151515; border-bottom: 2px solid #2d2d2d; }
+        .tab-btn { background: none; border: none; color: #888; padding: 15px 25px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; }
+        .tab-btn:hover { color: #fff; background: #252525; }
+        .tab-btn.active { color: #00bcff; border-bottom: 3px solid #00bcff; background: #1e1e1e; }
+        
+        /* Conteúdo das Abas */
+        .tab-content { display: none; padding: 30px; line-height: 1.6; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Botões das Abas -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'talentos')">Talentos</button>
+        <button class="tab-btn" onclick="switchTab(event, 'cartas')">Cartas</button>
+        <button class="tab-btn" onclick="switchTab(event, 'itens')">Itens</button>
+        <button class="tab-btn" onclick="switchTab(event, 'profissoes')">Profissões</button>
+    </div>
+
+    <!-- Conteúdo: TALENTOS -->
+    <div id="talentos" class="tab-content active">
+        <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talentos – DigiRider RPG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #0a0c10;
+    --panel: #0f1218;
+    --border: #1e2530;
+    --accent-combat: #e05555;
+    --accent-hack: #3ecfcf;
+    --accent-social: #c97de8;
+    --accent-vinculo: #f5c842;
+    --accent-survival: #4ecb71;
+    --text: #d8dde6;
+    --text-dim: #6b7585;
+    --gold: #c9a84c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 32px 20px;
+  }
+
+  h1 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 26px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+  }
+
+  .category {
+    margin-bottom: 48px;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .category-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border: 1px solid;
+    border-radius: 2px;
+  }
+
+  .cat-combat .category-label  { color: var(--accent-combat);  border-color: var(--accent-combat);  }
+  .cat-hack .category-label    { color: var(--accent-hack);    border-color: var(--accent-hack);    }
+  .cat-social .category-label  { color: var(--accent-social);  border-color: var(--accent-social);  }
+  .cat-vinculo .category-label { color: var(--accent-vinculo); border-color: var(--accent-vinculo); }
+  .cat-survival .category-label{ color: var(--accent-survival);border-color: var(--accent-survival);}
+
+  .talent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 16px;
+  }
+
+  .talent-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid;
+    padding: 18px 20px;
+    position: relative;
+  }
+
+  .cat-combat  .talent-card { border-left-color: var(--accent-combat);  }
+  .cat-hack    .talent-card { border-left-color: var(--accent-hack);    }
+  .cat-social  .talent-card { border-left-color: var(--accent-social);  }
+  .cat-vinculo .talent-card { border-left-color: var(--accent-vinculo); }
+  .cat-survival .talent-card{ border-left-color: var(--accent-survival);}
+
+  .talent-name {
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+
+  .cat-combat  .talent-name { color: var(--accent-combat);  }
+  .cat-hack    .talent-name { color: var(--accent-hack);    }
+  .cat-social  .talent-name { color: var(--accent-social);  }
+  .cat-vinculo .talent-name { color: var(--accent-vinculo); }
+  .cat-survival .talent-name{ color: var(--accent-survival);}
+
+  .levels {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .level-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 10px;
+    align-items: start;
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+  }
+
+  .level-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    padding-top: 2px;
+  }
+
+  .level-badge span {
+    display: inline-block;
+    padding: 1px 6px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--gold);
+    border-color: #3a3010;
+    background: #1a1800;
+    font-size: 11px;
+  }
+
+  .level-desc {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .usage {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 6px 0 48px;
+  }
+</style>
+</head>
+<body>
+
+<h1>◈ Talentos — DigiRider RPG</h1>
+<p class="subtitle">// 20 TALENTOS · 5 CATEGORIAS · 5 NÍVEIS CADA</p>
+
+<!-- ══════════════════════ COMBATE ══════════════════════ -->
+<section class="category cat-combat">
+  <div class="category-header">
+    <span class="category-label">⚔ Combate</span>
+  </div>
+  <div class="talent-grid">
+
+    <div class="talent-card">
+      <div class="talent-name">Golpe Preciso</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Antes de rolar um teste de ataque, você pode declarar precisão. Role novamente e fique com o maior resultado. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Ao usar precisão, adicione +1 dado extra ao teste de ataque. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Pode usar precisão em qualquer teste de Físico ou Habilidade, não apenas ataques. <div class="usage">[ 2× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Role três vezes e escolha o melhor resultado. O alvo não pode esquivar desse ataque. <div class="usage">[ 2× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Golpe sempre acerta. Adicione o valor do dado de Habilidade diretamente ao dano. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Reflexo de Batalha</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Ao ser atacado, role Movimento. Se o resultado for ≥ ao ataque inimigo, evite metade do dano. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Em caso de esquiva bem-sucedida, você pode contra-atacar imediatamente sem gastar ação. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Pode tentar esquivar de habilidades especiais de Digimons. Role Movimento vs. Habilidade do Digimon. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Se esquivar com margem de 5+, o ataque é completamente anulado e o inimigo perde o próximo turno. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Você pode se mover até 2 zonas ao esquivar. Cada esquiva bem-sucedida adiciona +1d4 ao seu próximo ataque. <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Tática de Campo</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Analise o campo de batalha: role Inteligência para revelar a fraqueza de um inimigo (elemento ou atributo mais baixo). <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Ao atacar a fraqueza revelada, você e seus aliados adicionam +1 dado ao teste. <div class="usage">[ Passivo após análise ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">A análise agora revela também o HP atual e as habilidades especiais do inimigo. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Pode coordenar aliados: distribua um bônus de +1d6 entre até 3 personagens no mesmo turno. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Ao iniciar combate, todos os aliados ganham +2 na iniciativa e revelam automaticamente as fraquezas de todos os inimigos visíveis. <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Resistência Bruta</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Ao receber dano que te deixaria com 0 HP, role Físico. Se passar, fique com 1 HP em vez de cair. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Reduza 2 pontos de todo dano físico recebido passivamente. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">A resistência passiva sobe para 4 pontos. O teste de sobrevivência pode ser usado 1× por combate. <div class="usage">[ Passivo + 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Quando cair abaixo de 5 HP, ganhe bônus de +2 dados em todos os testes de Físico até o fim do combate. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Pode absorver 1 golpe que eliminaria qualquer aliado adjacente, recebendo metade do dano. Resistência passiva sobe para 6. <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════ HACKING ══════════════════════ -->
+<section class="category cat-hack">
+  <div class="category-header">
+    <span class="category-label">◈ Hacking</span>
+  </div>
+  <div class="talent-grid">
+
+    <div class="talent-card">
+      <div class="talent-name">Hacker</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Adicione 1 dado extra a qualquer teste de Inteligência envolvendo sistemas digitais ou da Cyberede. <div class="usage">[ 1× por dia ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Pode tentar hackear equipamentos digitais de inimigos (Digivices, visores). Rolle Inteligência vs. Habilidade do alvo. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Ao hackear com sucesso, escolha um efeito: desativar 1 equipamento, revelar dados do alvo ou interferir em 1 habilidade especial do Digimon parceiro inimigo. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Pode hackear a própria Cyberede em uma área local, criando vantagens de terreno (zona instável, barreira de dados, etc). Role Inteligência, a dificuldade é definida pelo Mestre. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Pode sobrescrever temporariamente um atributo de qualquer sistema ou inimigo digital por 1 turno. Adicione 2 dados ao teste e o efeito dura até o fim da cena. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Firewall Pessoal</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Resistência a ataques de dados e hacking: role Inteligência para negar tentativas de hackear você ou seu Digivice. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Se resistir com sucesso, rastreie a origem do ataque (localização do hacker na cena). <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Proteja também aliados adjacentes. Pode redirecionar o ataque de volta ao hacker com metade da potência original. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Crie uma barreira de dados ao redor de sua equipe: por 3 turnos, todos ganham resistência a ataques digitais. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Imune a hacking. Pode absorver um ataque de dados e converter em +10 de Energia de Fusão no Digivice. <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Overclocking</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Forçe o Digivice ao limite: o Digimon parceiro age duas vezes no próximo turno, mas perde 5 HP após. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">A penalidade de HP cai para 2. Pode aplicar em você mesmo: aja duas vezes, perca 3 HP. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Overclocking agora concede +1 dado extra em todos os testes da rodada sobrecarregada. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Sem penalidade de HP. Pode aplicar em até dois personagens aliados simultaneamente. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Sobrecarregue a Energia de Fusão: ao ativar a fusão DigiRider, comece com +20 de bônus nos atributos da fusão por 2 turnos. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Análise de Dados</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Escaneie qualquer Digimon selvagem: role Inteligência para descobrir seu tipo, elemento e estágio de evolução. <div class="usage">[ Passivo / sem limite ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">A análise agora revela também os ataques especiais e o HP aproximado do alvo. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Pode escanear humanos e identificar seus equipamentos e talentos ativos. Adicione +1 dado contra alvos já analisados. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Preveja o próximo movimento de um inimigo analisado (o Mestre revela a ação antes que ela aconteça). <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Análise total: conheça todos os dados de qualquer ser digital ou humano na cena. Compartilhe as informações com todos os aliados instantaneamente. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════ SOCIAL ══════════════════════ -->
+<section class="category cat-social">
+  <div class="category-header">
+    <span class="category-label">◆ Social</span>
+  </div>
+  <div class="talent-grid">
+
+    <div class="talent-card">
+      <div class="talent-name">Palavras Certas</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Adicione 1 dado extra em testes de persuasão, negociação ou convencimento usando Inteligência. <div class="usage">[ 2× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Pode tentar convencer Digimons selvagens a não atacar. Role Inteligência vs. Sentidos do Digimon. <div class="usage">[ 1× por encontro ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Ao convencer com margem alta (5+), o alvo fica aliado temporariamente por 1 cena. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Pode interromper um combate com um discurso: role Inteligência, dificuldade definida pelo Mestre. Se passar, ambos os lados pausam e negociam. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Palavras que mudam destinos: convença qualquer PNJ a fazer algo contra seus interesses próprios, desde que não seja suicida. Adicione 2 dados ao teste. <div class="usage">[ 1× por arco narrativo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Liderança</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Inspire um aliado: ele adiciona +1 dado no próximo teste que fizer. <div class="usage">[ 2× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Pode inspirar dois aliados simultaneamente. Efeito dura por 1 turno inteiro. <div class="usage">[ 2× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Ao inspirar, aliados também ganham +5 HP temporário que dura até o fim da cena. <div class="usage">[ 2× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Grito de guerra: todos os aliados em cena ganham +1 dado em todos os testes pelo próximo turno. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Presença de líder: enquanto você estiver consciente, todos os aliados ignoram penalidades de moral e medo. Ao cair em combate, um aliado à sua escolha age imediatamente fora de ordem. <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Leitura de Pessoas</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Role Sentidos para detectar se alguém está mentindo ou escondendo algo em uma conversa. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Descubra a motivação principal de um PNJ com um teste de Sentidos bem-sucedido. O Mestre revela um segredo ou desejo do personagem. <div class="usage">[ 1× por sessão por alvo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Pode identificar inimigos disfarçados e detectar emboscadas sociais (traições planejadas). Adicione +2 dados a testes de percepção social. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Ao detectar uma mentira, pode usar isso como vantagem: o alvo fica em desvantagem social pelo resto da cena. <div class="usage">[ 1× por cena ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Empatia profunda: entenda o estado emocional de qualquer ser, incluindo Digimons. Pode acalmar criaturas em fúria ou revelar o trauma por trás de um antagonista. <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Rede de Contatos</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Você tem um contato confiável em alguma área (tecnologia, comércio, segurança). Uma vez por sessão, peça uma informação ou pequeno favor. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Sua rede cresce para 3 contatos em áreas distintas. Pode usá-los para conseguir equipamentos raros ou informações restritas. <div class="usage">[ 1× por sessão por contato ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Pode recrutar um contato como apoio temporário em campo (dura 1 sessão). O contato tem atributos básicos e 1 equipamento. <div class="usage">[ 1× por arco ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Sua reputação na Cyberede é conhecida. Digimons treinados por outros jogadores têm -1 dado ao agir contra você em situações sociais. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Contato de emergência: acione sua rede para conseguir reforço em qualquer situação, incluindo na Cyberede. O Mestre define o que é possível, mas você sempre tem alguém. <div class="usage">[ 1× por arco ]</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════ VÍNCULO ══════════════════════ -->
+<section class="category cat-vinculo">
+  <div class="category-header">
+    <span class="category-label">♦ Vínculo com Digimon</span>
+  </div>
+  <div class="talent-grid">
+
+    <div class="talent-card">
+      <div class="talent-name">Sintonia Digimon</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Você e seu Digimon entendem um ao outro sem palavras. Ambos agem na mesma iniciativa sem precisar comunicar o plano. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">O Digimon pode usar um teste seu (de Sentidos ou Inteligência) em vez do próprio para resistir a efeitos mentais. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Compartilhamento de sentidos: veja e ouça pelo Digimon em tempo real, mesmo à distância dentro da Cyberede. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">A sintonia gera ressonância: quando o Digimon acerta um golpe crítico, você ganha +10 de Energia de Fusão. Quando você leva dano, o Digimon recupera 5 HP. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Mente compartilhada: em combate, ambos agem antes de qualquer oponente no primeiro turno. A Energia de Fusão é gerada 50% mais rápido. <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Evolução Forçada</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Envie um pulso extra de energia pelo Digivice: o Digimon digievolui custando 10 pontos a menos de energia. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">A redução sobe para 20 pontos. O Digimon também recupera 10 HP ao digi-evoluir com este talento. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Pode forçar uma digievolução mesmo quando o Digimon está abaixo de 10 HP, que normalmente impediria a evolução. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Pule um estágio de evolução: vá direto do estágio atual para dois acima, consumindo energia dos dois estágios somados. <div class="usage">[ 1× por arco ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Evolução de Emergência: quando o Digimon estiver prestes a ser derrotado (1-5 HP), ative para digi-evoluir instantaneamente sem custo de energia. <div class="usage">[ 1× por arco ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Carga de Fusão</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Ao final de cada sessão, ganhe +5 de Energia de Fusão além do normal, representando os momentos marcantes vividos juntos. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Durante o combate, cada vez que o Digimon usa um Poder Especial com sucesso, ganhe +5 de Energia de Fusão imediatamente. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Bônus passivo sobe para +10 de Energia por sessão. Ao proteger o Digimon de um ataque, ganhe +10 imediatamente. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Carga acelerada: enquanto em fusão DigiRider, você não perde Energia de Fusão por turno por 3 turnos extras. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Reserva de Fusão: mesmo ao acabar a Energia de Fusão, você e o Digimon podem manter a forma DigiRider por mais 2 turnos usando HP como combustível (5 HP por turno). <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Voz do Parceiro</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Comunique-se mentalmente com seu Digimon mesmo fora da Cyberede, através do Digivice. Alcance ilimitado. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">O Digimon pode agir de forma autônoma na Cyberede enquanto você está no mundo real, seguindo orientações gerais que você transmite. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Em momentos de crise emocional, você ou o Digimon podem restaurar a calma do outro: negue efeitos de pânico, confusão ou medo para ambos. <div class="usage">[ 1× por cena ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">A ligação é tão profunda que dano sofrido por um pode ser dividido com o outro (50% cada), se ambos consentirem. <div class="usage">[ Passivo / ativável ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Chamado do Coração: se o Digimon for derrotado em combate, seu apelo emocional pode fazer ele retornar com 10 HP após 1 turno. Só funciona uma vez por história. <div class="usage">[ 1× por arco narrativo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════ SOBREVIVÊNCIA ══════════════════════ -->
+<section class="category cat-survival">
+  <div class="category-header">
+    <span class="category-label">◉ Sobrevivência</span>
+  </div>
+  <div class="talent-grid">
+
+    <div class="talent-card">
+      <div class="talent-name">Instinto de Fuga</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Role Movimento para escapar de qualquer situação de perseguição ou cerco, sem precisar de ação de combate. <div class="usage">[ 1× por cena ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Ao fugir, pode levar um aliado adjacente sem penalidade no teste. <div class="usage">[ 1× por cena ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Fuja e deixe uma armadilha de dados improvisada: o perseguidor deve superar um teste de Habilidade ou perder 1 turno. <div class="usage">[ 1× por cena ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Pode declarar fuga antes de receber um ataque fatal. O ataque é negado e você some da cena. Reaparece na próxima cena em local seguro. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Rastro Falso: ao fugir, deixe um rastro de dados que confunde inimigos por toda a sessão. Eles têm -2 dados para rastreá-lo ou antecipar seus movimentos. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Médico de Campo</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Usando itens básicos ou dados do ambiente na Cyberede, restaure 5 HP de um aliado fora de combate. <div class="usage">[ 2× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Pode curar durante combate gastando sua ação. A cura sobe para 8 HP. Pode estabilizar um aliado com 0 HP (ele fica com 1 HP). <div class="usage">[ 2× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Cura também remove 1 efeito negativo (veneno de dados, paralisia digital, confusão). A cura sobe para 12 HP. <div class="usage">[ 2× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Cura em área: restaure 8 HP a todos os aliados adjacentes de uma vez. <div class="usage">[ 1× por combate ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Ressincronização de Dados: restaure totalmente o HP de um aliado (inclusive o Digimon) fora de combate, reconstruindo seus dados digitais. Leva 1 turno completo de concentração. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Rastreador</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Role Sentidos para seguir rastros de dados de qualquer ser que passou por uma área da Cyberede nas últimas 24h. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Pode rastrear no mundo real (pegadas digitais em dispositivos). Adicione +1 dado em testes de investigação de campo. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Marque um alvo: você sempre sabe a direção geral do alvo marcado dentro da mesma sessão. <div class="usage">[ 1× por sessão por alvo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Pode rastrear sinais de Energia de Fusão: localize qualquer DigiRider ativo na área, mesmo que esteja escondido. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Rastro Indelével: uma vez rastreado, um alvo nunca escapa de você. Mesmo em sessões futuras, você sabe onde ele esteve pela última vez. O Mestre fornece pistas automáticas. <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="talent-card">
+      <div class="talent-name">Adaptação Rápida</div>
+      <div class="levels">
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 1</span></div>
+          <div class="level-desc">Na primeira vez que falhar em um tipo de teste durante uma sessão, ganhe +1 dado em todos os testes do mesmo tipo pelo resto da sessão. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 2</span></div>
+          <div class="level-desc">Ao entrar em um ambiente novo (zona da Cyberede, local desconhecido), role Sentidos para identificar vantagens de terreno antes de qualquer ação. <div class="usage">[ Passivo ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 3</span></div>
+          <div class="level-desc">Improvise equipamentos do ambiente: use dados ou fragmentos da Cyberede para criar ferramentas básicas com 1 uso cada. Mestre define o que é possível. <div class="usage">[ 2× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 4</span></div>
+          <div class="level-desc">Copie um talento de Sobrevivência ou Combate observado em um aliado: use-o com metade do efeito pelo resto da cena. <div class="usage">[ 1× por sessão ]</div></div>
+        </div>
+        <div class="level-row">
+          <div class="level-badge"><span>Nível 5</span></div>
+          <div class="level-desc">Você nunca é pego de surpresa. Imune a emboscadas e age sempre no primeiro turno de combates inesperados. Quando usar um improviso, ele tem efeito completo em vez de reduzido. <div class="usage">[ Passivo ]</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>
+
+        <h2>Lista de Talentos</h2>
+        <p>Seu código de talentos entra aqui.</p>
+    </div>
+
+    <!-- Conteúdo: CARTAS -->
+    <div id="cartas" class="tab-content">
+        <!-- [COLE AQUI APENAS O CONTEÚDO DO SEU HTML DE CARTAS] -->
+        <h2>Cartas Digivice</h2>
+        <p>Seu código de cartas entra aqui.</p>
+    </div>
+
+    <!-- Conteúdo: ITENS -->
+    <div id="itens" class="tab-content">
+        <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Itens — DigiRider RPG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #0a0c10;
+    --panel: #0f1218;
+    --panel2: #121820;
+    --border: #1e2530;
+    --text: #d8dde6;
+    --text-dim: #6b7585;
+    --gold: #c9a84c;
+
+    --cat-digivice: #3ecfcf;
+    --cat-upgrade: #5b9ef5;
+    --cat-evolucao: #4ecb71;
+    --cat-combate: #e05555;
+    --cat-armadura: #c97de8;
+    --cat-recuperacao: #f5c842;
+    --cat-especial: #e8934a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 32px 20px;
+  }
+
+  h1 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 26px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  /* CATEGORY NAV */
+  .cat-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cat-pill {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border: 1px solid;
+    border-radius: 2px;
+    cursor: default;
+  }
+
+  .cat-pill.digivice  { color: var(--cat-digivice);    border-color: var(--cat-digivice);    }
+  .cat-pill.upgrade   { color: var(--cat-upgrade);     border-color: var(--cat-upgrade);     }
+  .cat-pill.evolucao  { color: var(--cat-evolucao);    border-color: var(--cat-evolucao);    }
+  .cat-pill.combate   { color: var(--cat-combate);     border-color: var(--cat-combate);     }
+  .cat-pill.armadura  { color: var(--cat-armadura);    border-color: var(--cat-armadura);    }
+  .cat-pill.recuperacao { color: var(--cat-recuperacao); border-color: var(--cat-recuperacao); }
+  .cat-pill.especial  { color: var(--cat-especial);    border-color: var(--cat-especial);    }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border: 1px solid;
+    border-radius: 2px;
+  }
+
+  .section-title.digivice   { color: var(--cat-digivice);    border-color: var(--cat-digivice);    }
+  .section-title.upgrade    { color: var(--cat-upgrade);     border-color: var(--cat-upgrade);     }
+  .section-title.evolucao   { color: var(--cat-evolucao);    border-color: var(--cat-evolucao);    }
+  .section-title.combate    { color: var(--cat-combate);     border-color: var(--cat-combate);     }
+  .section-title.armadura   { color: var(--cat-armadura);    border-color: var(--cat-armadura);    }
+  .section-title.recuperacao{ color: var(--cat-recuperacao); border-color: var(--cat-recuperacao); }
+  .section-title.especial   { color: var(--cat-especial);    border-color: var(--cat-especial);    }
+
+  .section-count {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* ITEM GRID */
+  .item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+    gap: 12px;
+  }
+
+  .item-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid;
+    padding: 14px 16px;
+    position: relative;
+  }
+
+  .item-card.digivice   { border-left-color: var(--cat-digivice);    }
+  .item-card.upgrade    { border-left-color: var(--cat-upgrade);     }
+  .item-card.evolucao   { border-left-color: var(--cat-evolucao);    }
+  .item-card.combate    { border-left-color: var(--cat-combate);     }
+  .item-card.armadura   { border-left-color: var(--cat-armadura);    }
+  .item-card.recuperacao{ border-left-color: var(--cat-recuperacao); }
+  .item-card.especial   { border-left-color: var(--cat-especial);    }
+
+  .item-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .item-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+
+  .item-name {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex: 1;
+  }
+
+  .item-card.digivice   .item-name { color: var(--cat-digivice);    }
+  .item-card.upgrade    .item-name { color: var(--cat-upgrade);     }
+  .item-card.evolucao   .item-name { color: var(--cat-evolucao);    }
+  .item-card.combate    .item-name { color: var(--cat-combate);     }
+  .item-card.armadura   .item-name { color: var(--cat-armadura);    }
+  .item-card.recuperacao .item-name{ color: var(--cat-recuperacao); }
+  .item-card.especial   .item-name { color: var(--cat-especial);    }
+
+  .item-uses {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    border: 1px solid;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .item-card.digivice   .item-uses { color: var(--cat-digivice);    border-color: var(--cat-digivice);    background: #051a1a; }
+  .item-card.upgrade    .item-uses { color: var(--cat-upgrade);     border-color: var(--cat-upgrade);     background: #05101a; }
+  .item-card.evolucao   .item-uses { color: var(--cat-evolucao);    border-color: var(--cat-evolucao);    background: #051a08; }
+  .item-card.combate    .item-uses { color: var(--cat-combate);     border-color: var(--cat-combate);     background: #1a0505; }
+  .item-card.armadura   .item-uses { color: var(--cat-armadura);    border-color: var(--cat-armadura);    background: #120518; }
+  .item-card.recuperacao .item-uses{ color: var(--cat-recuperacao); border-color: var(--cat-recuperacao); background: #1a1500; }
+  .item-card.especial   .item-uses { color: var(--cat-especial);    border-color: var(--cat-especial);    background: #1a0c00; }
+
+  .item-desc {
+    font-size: 13px;
+    color: #a0aab8;
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+
+  .item-effect {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .item-effect strong {
+    color: var(--gold);
+  }
+
+  .item-tag {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    margin-top: 5px;
+    border-radius: 1px;
+  }
+</style>
+</head>
+<body>
+
+<h1>◈ Itens — DigiRider RPG</h1>
+<p class="subtitle">// 50 ITENS · 7 CATEGORIAS</p>
+
+<div class="cat-nav">
+  <span class="cat-pill digivice">◈ Digivices</span>
+  <span class="cat-pill upgrade">⚙ Upgrades de Digivice</span>
+  <span class="cat-pill evolucao">▲ Itens de Evolução</span>
+  <span class="cat-pill combate">⚔ Itens de Combate</span>
+  <span class="cat-pill armadura">◆ Armaduras &amp; Proteção</span>
+  <span class="cat-pill recuperacao">♥ Recuperação</span>
+  <span class="cat-pill especial">✦ Itens Especiais</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--                   DIGIVICES                     -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-title digivice">◈ Digivices</span>
+    <span class="section-count">itens 01 – 06</span>
+  </div>
+  <div class="item-grid">
+
+    <div class="item-card digivice">
+      <div class="item-top">
+        <span class="item-num">01</span>
+        <span class="item-name">Digivice Padrão</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">O Digivice mais comum distribuído a novos parceiros. Um dispositivo holográfico de pulso que projeta uma interface digital ao redor do usuário e mantém a conexão com o Digimon parceiro tanto no mundo real quanto na Cyberede.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Armazena até <strong>100 de Energia de Digievolução</strong> e até <strong>100 de Energia de Fusão</strong>. Permite acesso à Cyberede e comunicação com o parceiro Digimon a qualquer momento. Passivo permanente.</div>
+      <span class="item-tag">EQUIPAMENTO BASE</span>
+    </div>
+
+    <div class="item-card digivice">
+      <div class="item-top">
+        <span class="item-num">02</span>
+        <span class="item-name">Digivice Avançado — Modelo X</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Versão aprimorada do Digivice Padrão, produzida pela divisão de engenharia da Corporação Datahaven. Possui carcaça reforçada de polímero digital e processadores de segunda geração que aumentam a eficiência da transmissão de energia.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Armazena até <strong>150 de Energia de Digievolução</strong> e até <strong>150 de Energia de Fusão</strong>. A cada sessão, recupera automaticamente <strong>+10 de Energia de Digievolução</strong> no início da partida.</div>
+      <span class="item-tag">UPGRADE DO PADRÃO</span>
+    </div>
+
+    <div class="item-card digivice">
+      <div class="item-top">
+        <span class="item-num">03</span>
+        <span class="item-name">Digivice Crono — Modelo T</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Desenvolvido em colaboração com pesquisadores da Zona Null, este Digivice em formato de relógio de pulso possui um sensor temporal que registra anomalias de tempo detectadas nas regiões mais instáveis do Nexus-0. Raro e cobiçado.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Capacidade padrão de energia. Uma vez por sessão, pode <strong>reverter 1 ação sua</strong> do turno anterior como se ela não tivesse acontecido. O resultado do turno é descartado e você age novamente.</div>
+      <span class="item-tag">RARO</span>
+    </div>
+
+    <div class="item-card digivice">
+      <div class="item-top">
+        <span class="item-num">04</span>
+        <span class="item-name">Digivice Óptico — Modelo V</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Integrado a um par de óculos de realidade aumentada de última geração. A interface é sobreposta diretamente ao campo de visão do usuário, exibindo dados de combate, análises de inimigos e o estado do parceiro em tempo real.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Capacidade padrão de energia. Concede <strong>+1 dado em todos os testes de Sentidos e Inteligência</strong> dentro da Cyberede. Revela automaticamente o tipo e elemento de qualquer Digimon avistado.</div>
+      <span class="item-tag">TÉCNICO</span>
+    </div>
+
+    <div class="item-card digivice">
+      <div class="item-top">
+        <span class="item-num">05</span>
+        <span class="item-name">Digivice Fusão — Modelo F</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Projetado especificamente para DigiRiders que priorizam a fusão com seu parceiro. Sua superfície pulsa com energia dourada quando a Energia de Fusão está alta, e os treinadores que o utilizam relatam uma sincronização emocional muito mais intensa com seus Digimon.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Armazena até <strong>200 de Energia de Fusão</strong> (mas apenas 100 de Digievolução). A Energia de Fusão gerada em combate é aumentada em <strong>+5 por evento</strong> que normalmente geraria energia.</div>
+      <span class="item-tag">ESPECIALIZADO — FUSÃO</span>
+    </div>
+
+    <div class="item-card digivice">
+      <div class="item-top">
+        <span class="item-num">06</span>
+        <span class="item-name">Digivice Lendário — Modelo Ω</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Apenas alguns exemplares existem no mundo. Diz-se que sua construção envolveu fragmentos de dados coletados nas profundezas da Zona Null e que o próprio Chronomon Prime esteve presente em sua criação. Quem o porta carrega uma responsabilidade que poucos compreendem.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Armazena até <strong>200 de Energia de Digievolução</strong> e <strong>200 de Energia de Fusão</strong>. Regenera <strong>+5 de Energia de Fusão por turno</strong> automaticamente. Concede +1 dado em todos os testes enquanto estiver na forma DigiRider.</div>
+      <span class="item-tag">LENDÁRIO — MUITO RARO</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--             UPGRADES DE DIGIVICE               -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-title upgrade">⚙ Upgrades de Digivice</span>
+    <span class="section-count">itens 07 – 17</span>
+  </div>
+  <div class="item-grid">
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">07</span>
+        <span class="item-name">Módulo de Expansão de Energia</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Um chip de memória digital instalado no slot de expansão do Digivice. Aumenta a capacidade dos reservatórios energéticos internos do dispositivo, permitindo armazenar mais energia tanto de Digievolução quanto de Fusão.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Aumenta a capacidade máxima do Digivice em <strong>+50 de Energia de Digievolução</strong> e <strong>+50 de Energia de Fusão</strong>. Pode ser instalado uma vez por Digivice.</div>
+      <span class="item-tag">INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">08</span>
+        <span class="item-name">Cânhão de Laser Digivice</span>
+        <span class="item-uses">3× por sessão</span>
+      </div>
+      <p class="item-desc">Um módulo de ataque acoplado ao Digivice que converte Energia de Digievolução em um disparo concentrado de luz digital. Engenheiros de Digivice desenvolveram esta modificação após perceber que treinadores frequentemente ficavam vulneráveis enquanto seus parceiros estavam em combate.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Gasta <strong>15 de Energia de Digievolução</strong>. Dispara um laser que causa <strong>dano = seu dado de Habilidade</strong> em um alvo à distância. Role Habilidade para acertar. Ignora armaduras leves.</div>
+      <span class="item-tag">ARMA · INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">09</span>
+        <span class="item-name">Lâmina de Dados</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Uma extensão retrátil de energia cristalizada que emerge do Digivice, formando uma lâmina de aproximadamente 40 cm. Não é um objeto físico convencional — é energia de dado puro, capaz de cortar estruturas digitais e causar dano real dentro da Cyberede.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Permite ataques corpo a corpo usando o dado de <strong>Físico</strong>. Causa <strong>dano = Físico + Habilidade</strong>. Ataques com a lâmina podem afetar seres digitais que são imunes a ataques físicos convencionais.</div>
+      <span class="item-tag">ARMA · INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">10</span>
+        <span class="item-name">Escudo de Barreira Holográfica</span>
+        <span class="item-uses">2× por combate</span>
+      </div>
+      <p class="item-desc">Um módulo defensivo que projeta um campo de força holográfico ao redor do usuário ao detectar um ataque iminente. O campo se dissolve após absorver o impacto, mas pode ser reativado pelo processador do Digivice.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Ativa como reação a um ataque. <strong>Absorve completamente 1 ataque</strong>, independente do dano. Após absorver, o escudo precisa de 1 turno de recarga antes de ser ativado novamente.</div>
+      <span class="item-tag">DEFENSIVO · INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">11</span>
+        <span class="item-name">Módulo de Pulso EMP Digital</span>
+        <span class="item-uses">2× por sessão</span>
+      </div>
+      <p class="item-desc">Emite uma onda de pulso eletromagnético digital que interfere em sistemas eletrônicos e estruturas de dados ao redor. Extremamente eficaz contra Digimon do tipo Máquina e contra hackers que usam interfaces tecnológicas.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Afeta todos em um raio curto. Digimons do tipo Máquina ficam <strong>atordoados por 1 turno</strong>. Equipamentos tecnológicos de inimigos ficam inoperantes por 2 turnos. Aliados com upgrades de Digivice também são afetados — avise-os antes de usar.</div>
+      <span class="item-tag">ÁREA · INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">12</span>
+        <span class="item-name">Módulo de Teletransporte Curto</span>
+        <span class="item-uses">2× por sessão</span>
+      </div>
+      <p class="item-desc">Usa a infraestrutura de portais da Cyberede em miniatura para criar saltos de curta distância. O processo desmaterializa o usuário por uma fração de segundo e o rematerializa em um ponto próximo, deixando apenas um rastro de partículas de dados.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Teleporte instantâneo para qualquer ponto visível dentro da mesma zona de combate. Pode ser usado como ação de movimento <strong>ou</strong> como reação para escapar de um ataque antes de ele acertar.</div>
+      <span class="item-tag">MOBILIDADE · INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">13</span>
+        <span class="item-name">Módulo de Scanner Avançado</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Aprimora os sensores de análise do Digivice, transformando-o em um verdadeiro laboratório portátil. Frequentemente usado por Caçadores de Anomalias e Arqueólogos Digitais para análise de campo em locais inóspitos.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Ao escanear qualquer Digimon, revela <strong>HP atual, atributos, elemento e fraquezas</strong> automaticamente sem precisar rolar dados. Também detecta armadilhas de dados e itens ocultos no ambiente.</div>
+      <span class="item-tag">UTILITÁRIO · INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">14</span>
+        <span class="item-name">Módulo de Escudo Anti-Hack</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Uma camada de criptografia de alto nível aplicada ao firmware do Digivice. Torna o dispositivo praticamente impenetrável a invasões externas e protege a assinatura mental do usuário durante a imersão na Cyberede.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Imunidade total a tentativas de hackear o Digivice. Ataques de dados direcionados ao usuário têm <strong>–2 dados</strong> para acertar. Se um hacker falhar ao tentar invadir seu Digivice, sofre <strong>dano reflexivo = seu dado de Inteligência</strong>.</div>
+      <span class="item-tag">DEFENSIVO · INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">15</span>
+        <span class="item-name">Amplificador de Fusão</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Um cristal de dados raros encaixado no núcleo do Digivice. Potencializa a ressonância entre a consciência humana e a estrutura digital do Digimon parceiro, tornando a fusão mais estável e poderosa.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Na forma DigiRider, todos os atributos fundidos recebem <strong>+1 dado extra</strong>. O tempo máximo de manutenção da fusão antes de precisar de recarga aumenta em <strong>2 turnos adicionais</strong>.</div>
+      <span class="item-tag">FUSÃO · INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">16</span>
+        <span class="item-name">Canhão de Rajada de Dados</span>
+        <span class="item-uses">2× por combate</span>
+      </div>
+      <p class="item-desc">Uma versão mais pesada do Canhão de Laser, capaz de disparar uma onda expansiva de dados comprimidos que afeta uma área inteira. O recuo do disparo é considerável — usuários sem Físico alto relatam ser empurrados alguns passos para trás.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Gasta <strong>25 de Energia de Digievolução</strong>. Disparo em cone curto que atinge <strong>todos os inimigos na área</strong>. Dano = dado de Habilidade. Inimigos atingidos precisam rolar Físico ou são <strong>empurrados 1 zona</strong>.</div>
+      <span class="item-tag">ARMA · ÁREA · INSTALÁVEL</span>
+    </div>
+
+    <div class="item-card upgrade">
+      <div class="item-top">
+        <span class="item-num">17</span>
+        <span class="item-name">Módulo de Invisibilidade Digital</span>
+        <span class="item-uses">2× por sessão</span>
+      </div>
+      <p class="item-desc">Permite que o Digivice mascare a assinatura digital do usuário, tornando-o praticamente indetectável para sensores e Digimon. O efeito é temporário — o processamento necessário para manter a invisibilidade gera calor que eventualmente é detectável.</p>
+      <div class="item-effect"><strong>Efeito:</strong> O usuário fica <strong>invisível por até 3 turnos</strong> ou até realizar uma ação ofensiva. Enquanto invisível, ataques contra ele têm –2 dados. O primeiro ataque saindo da invisibilidade concede +1 dado e ignora esquiva.</div>
+      <span class="item-tag">FURTIVIDADE · INSTALÁVEL</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--              ITENS DE EVOLUÇÃO                 -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-title evolucao">▲ Itens de Evolução</span>
+    <span class="section-count">itens 18 – 26</span>
+  </div>
+  <div class="item-grid">
+
+    <div class="item-card evolucao">
+      <div class="item-top">
+        <span class="item-num">18</span>
+        <span class="item-name">Cápsula de Energia Digital</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Uma pequena cápsula translúcida preenchida com energia de dado puro concentrada. É o item de evolução mais comum em Datahaven, vendido em lojas de suprimentos para treinadores iniciantes. Sua cor varia de azul claro a azul intenso conforme a potência.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Restaura <strong>+30 de Energia de Digievolução</strong> no Digivice imediatamente.</div>
+      <span class="item-tag">CONSUMÍVEL</span>
+    </div>
+
+    <div class="item-card evolucao">
+      <div class="item-top">
+        <span class="item-num">19</span>
+        <span class="item-name">Cápsula de Energia Avançada</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Versão refinada da cápsula padrão, produzida com energia de dado coletada em regiões profundas de Datahaven. A concentração é maior e o tempo de absorção pelo Digivice é instantâneo, tornando-a preferida por DigiRiders em combate.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Restaura <strong>+60 de Energia de Digievolução</strong> no Digivice imediatamente.</div>
+      <span class="item-tag">CONSUMÍVEL</span>
+    </div>
+
+    <div class="item-card evolucao">
+      <div class="item-top">
+        <span class="item-num">20</span>
+        <span class="item-name">Cristal de Digievolução</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Um cristal formado naturalmente em cavernas de dados cristalizados nas montanhas de Datahaven. Raros e de alta valor, são usados por treinadores que precisam Digi-evoluir seus parceiros rapidamente em situações críticas.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Restaura <strong>100 de Energia de Digievolução</strong> no Digivice imediatamente. Enche completamente a barra de qualquer Digivice Padrão.</div>
+      <span class="item-tag">CONSUMÍVEL · RARO</span>
+    </div>
+
+    <div class="item-card evolucao">
+      <div class="item-top">
+        <span class="item-num">21</span>
+        <span class="item-name">Semente de Fusão</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Um fragmento de Energia de Fusão cristalizada, coletado em locais onde fusões DigiRider poderosas ocorreram. A energia residual permanece impregnada no cristal por um longo período antes de se dissolver naturalmente nos dados do ambiente.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Restaura <strong>+40 de Energia de Fusão</strong> no Digivice imediatamente.</div>
+      <span class="item-tag">CONSUMÍVEL</span>
+    </div>
+
+    <div class="item-card evolucao">
+      <div class="item-top">
+        <span class="item-num">22</span>
+        <span class="item-name">Núcleo de Fusão</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Uma versão concentrada e estabilizada da Semente de Fusão, produzida em laboratórios especializados. Sua obtenção é difícil e cara — mas para um DigiRider prestes a entrar em sua forma mais poderosa, não tem preço.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Restaura <strong>+80 de Energia de Fusão</strong> no Digivice imediatamente.</div>
+      <span class="item-tag">CONSUMÍVEL · RARO</span>
+    </div>
+
+    <div class="item-card evolucao">
+      <div class="item-top">
+        <span class="item-num">23</span>
+        <span class="item-name">Catalisador de Evolução</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Uma substância líquida de cor dourada que, ao ser absorvida pelo Digivice, acelera temporariamente o ciclo evolutivo do Digimon parceiro. Usado em momentos críticos onde uma Digievolução rápida pode mudar o resultado de um combate.</p>
+      <div class="item-effect"><strong>Efeito:</strong> O Digimon parceiro pode Digi-evoluir <strong>sem custo de Energia</strong> no próximo turno. A evolução é sustentada por <strong>2 turnos extras</strong> antes de precisar do custo normal para manutenção.</div>
+      <span class="item-tag">CONSUMÍVEL · RARO</span>
+    </div>
+
+    <div class="item-card evolucao">
+      <div class="item-top">
+        <span class="item-num">24</span>
+        <span class="item-name">Fragmento de Dado Antigo</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Um pedaço de dado cristalizado de era pré-Contato, encontrado em ruínas do Nexus-0. A energia armazenada nesses fragmentos é de uma natureza completamente diferente da encontrada em Datahaven moderno — mais antiga, mais densa e menos compreendida.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Ao usar, escolha: restaura <strong>+50 de Energia de Digievolução</strong> OU <strong>+50 de Energia de Fusão</strong> OU adiciona <strong>+2 dados</strong> em um único teste da próxima ação.</div>
+      <span class="item-tag">CONSUMÍVEL · VERSÁTIL · RARO</span>
+    </div>
+
+    <div class="item-card evolucao">
+      <div class="item-top">
+        <span class="item-num">25</span>
+        <span class="item-name">Ampulheta de Chronomon</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Um objeto misterioso cuja origem ninguém consegue rastrear completamente. Contém areia feita de partículas de tempo cristalizado, associadas aos poderes do Guardião Chronomon Prime. Alguns pesquisadores acreditam que ele mesmo as distribui — discretamente — quando julga necessário.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Permite ao Digimon parceiro <strong>agir duas vezes</strong> no próximo turno sem penalidade. Alternativamente, pode ser usada para <strong>pausar um efeito de tempo</strong> (veneno, contagem regressiva, falha temporal) por 2 turnos.</div>
+      <span class="item-tag">CONSUMÍVEL · LENDÁRIO</span>
+    </div>
+
+    <div class="item-card evolucao">
+      <div class="item-top">
+        <span class="item-num">26</span>
+        <span class="item-name">Chave de Spatiamon</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Uma chave translúcida feita de espaço comprimido, associada ao Guardião Spatiamon Infinity. Ao ser ativada, distorce brevemente o tecido espacial do Nexus-0 ao redor do usuário, criando efeitos impossíveis pela física convencional da Cyberede.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Ao ativar, escolha: <strong>teletransporte imediato</strong> para qualquer ponto da cena sem limites de distância, OU crie uma <strong>barreira espacial</strong> que bloqueia a passagem de qualquer ser por 2 turnos em um ponto definido.</div>
+      <span class="item-tag">CONSUMÍVEL · LENDÁRIO</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--               ITENS DE COMBATE                 -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-title combate">⚔ Itens de Combate Humano</span>
+    <span class="section-count">itens 27 – 35</span>
+  </div>
+  <div class="item-grid">
+
+    <div class="item-card combate">
+      <div class="item-top">
+        <span class="item-num">27</span>
+        <span class="item-name">Granada de Dados</span>
+        <span class="item-uses">3× consumível</span>
+      </div>
+      <p class="item-desc">Uma esfera pequena de energia de dado comprimida. Ao ser arremessada, libera uma explosão de partículas digitais que desorganiza a estrutura de dado de qualquer ser na área. Muito usada por Guardiões de Rede no controle de Digimon hostis.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Arremesse em um ponto da cena. Todos no raio de explosão sofrem dano = <strong>2d6 de dado de Habilidade</strong>. Digimon atingidos precisam rolar Físico ou ficam <strong>atordoados por 1 turno</strong>.</div>
+      <span class="item-tag">ARREMESSÁVEL · ÁREA</span>
+    </div>
+
+    <div class="item-card combate">
+      <div class="item-top">
+        <span class="item-num">28</span>
+        <span class="item-name">Armadilha de Rede Digital</span>
+        <span class="item-uses">3× consumível</span>
+      </div>
+      <p class="item-desc">Uma rede feita de filamentos de energia digital que se expande ao contato com qualquer estrutura de dado. Ao envolver um Digimon, os filamentos se contraem e restringem o fluxo de energia interna, impedindo movimentos e ataques.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Role Habilidade para acertar. Se acertar, o alvo fica <strong>imobilizado por 2 turnos</strong> e não pode usar Poderes Especiais. Pode ser quebrada pelo alvo rolando Físico com dificuldade alta (Mestre define).</div>
+      <span class="item-tag">CONTROLE · ARREMESSÁVEL</span>
+    </div>
+
+    <div class="item-card combate">
+      <div class="item-top">
+        <span class="item-num">29</span>
+        <span class="item-name">Bomba de Corrupção</span>
+        <span class="item-uses">2× consumível</span>
+      </div>
+      <p class="item-desc">Um dispositivo experimental desenvolvido por Caçadores de Anomalias a partir de fragmentos de dado corrompido coletados em zonas instáveis. Ao detonar, libera uma nuvem de corrupção que interfere nos dados de qualquer ser vivo digital.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Ao explodir, todos os Digimon na área têm seus <strong>Poderes Especiais bloqueados por 2 turnos</strong>. Humanos não são afetados. Cuidado: use ao ar livre — em ambientes fechados, a corrupção pode afetar o próprio ambiente.</div>
+      <span class="item-tag">ÁREA · EXPERIMENTAL</span>
+    </div>
+
+    <div class="item-card combate">
+      <div class="item-top">
+        <span class="item-num">30</span>
+        <span class="item-name">Sinalizador de Ameaça</span>
+        <span class="item-uses">2× por sessão</span>
+      </div>
+      <p class="item-desc">Um dispositivo que emite um sinal de alerta diretamente para o Digimon parceiro, transmitindo dados precisos sobre a posição e o estado de um inimigo. Sincroniza a percepção do humano com a do Digimon, permitindo ataques coordenados de precisão cirúrgica.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Marque um inimigo. Pelo próximo turno, o Digimon parceiro tem <strong>+2 dados em todos os ataques</strong> contra esse alvo e seus ataques <strong>não podem ser esquivados</strong>.</div>
+      <span class="item-tag">SUPORTE</span>
+    </div>
+
+    <div class="item-card combate">
+      <div class="item-top">
+        <span class="item-num">31</span>
+        <span class="item-name">Pulso de Sobrecarga</span>
+        <span class="item-uses">2× por sessão</span>
+      </div>
+      <p class="item-desc">Um dispositivo de mão que emite um pulso de energia capaz de sobrecarregar temporariamente o sistema nervoso digital de um Digimon, causando uma falha de processamento momentânea. Muito eficaz contra Digimon do tipo Máquina.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Um alvo Digimon deve rolar Inteligência. Se falhar, sofre <strong>–1 dado em todos os testes por 2 turnos</strong>. Digimon do tipo Máquina têm –2 dados no teste de resistência.</div>
+      <span class="item-tag">DEBUFF</span>
+    </div>
+
+    <div class="item-card combate">
+      <div class="item-top">
+        <span class="item-num">32</span>
+        <span class="item-name">Escudo de Mão Digital</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Um pequeno dispositivo de pulso que projeta um campo de força plano em formato de escudo ao ser ativado. Diferente dos módulos de Digivice, este é um item independente que não requer instalação e pode ser emprestado para aliados.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Concede <strong>RD 3</strong> contra todos os ataques físicos. Uma vez por combate, pode ser usado como reação para bloquear completamente 1 ataque, mas o escudo fica inoperante por 1 turno após.</div>
+      <span class="item-tag">DEFENSIVO · PERMANENTE</span>
+    </div>
+
+    <div class="item-card combate">
+      <div class="item-top">
+        <span class="item-num">33</span>
+        <span class="item-name">Bastão Elétrico de Dados</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Uma arma corpo a corpo desenvolvida por Guardiões de Rede para conter Digimon sem eliminá-los. O bastão conduz energia elétrica digital que paralisa temporariamente a estrutura de dado do alvo sem causar dano permanente.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Ataques causam dano = <strong>Físico</strong>. Ao acertar, o alvo deve rolar Físico ou fica <strong>paralisado por 1 turno</strong>. Pode ser configurado para modo não-letal (Mestre define que o alvo cai inconsciente em vez de morrer).</div>
+      <span class="item-tag">ARMA CaC · NÃO-LETAL</span>
+    </div>
+
+    <div class="item-card combate">
+      <div class="item-top">
+        <span class="item-num">34</span>
+        <span class="item-name">Mina de Dados</span>
+        <span class="item-uses">3× consumível</span>
+      </div>
+      <p class="item-desc">Uma mina de pressão digital que pode ser colocada em qualquer superfície da Cyberede. Invisível para Sentidos básicos, ela detona quando qualquer ser pisoteia o ponto marcado. Muito usada por Exploradores de Dados em rotas conhecidas.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Coloque em uma superfície. Quando ativada, causa dano = <strong>3d6</strong> ao ser que a ativou. Detectável com teste de Sentidos (dificuldade alta). Pode ser desarmada com Habilidade.</div>
+      <span class="item-tag">ARMADILHA</span>
+    </div>
+
+    <div class="item-card combate">
+      <div class="item-top">
+        <span class="item-num">35</span>
+        <span class="item-name">Sinalizador de Auxílio DigiRider</span>
+        <span class="item-uses">1× por arco</span>
+      </div>
+      <p class="item-desc">Um dispositivo de emergência regulado pelas organizações de Guardiões de Rede. Ao ser ativado, envia um sinal de socorro que pode ser captado por qualquer DigiRider ou Guardião dentro do setor da Cyberede. O uso indevido é punido com suspensão de acesso à rede.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Envia um sinal de socorro. Em <strong>1d4 turnos</strong>, um DigiRider NPC aliado chega na cena com atributos de nível médio e auxilia no combate por 1 cena completa antes de partir.</div>
+      <span class="item-tag">SUPORTE · EMERGÊNCIA</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--             ARMADURAS E PROTEÇÃO               -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-title armadura">◆ Armaduras &amp; Proteção</span>
+    <span class="section-count">itens 36 – 42</span>
+  </div>
+  <div class="item-grid">
+
+    <div class="item-card armadura">
+      <div class="item-top">
+        <span class="item-num">36</span>
+        <span class="item-name">Colete Invisível Mk.I</span>
+        <span class="item-uses">10× usos de absorção</span>
+      </div>
+      <p class="item-desc">Um colete de fibra de dado tecida que se adapta ao corpo do usuário e permanece completamente invisível ao olhar comum. Muito usado por Exploradores e Caçadores de Anomalias que precisam de proteção sem abrir mão da mobilidade.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Concede <strong>RD 5</strong> contra ataques físicos. Cada vez que absorve dano, gasta 1 uso. Ao atingir 0 usos, o colete se dissolve em partículas de dado e precisa ser substituído.</div>
+      <span class="item-tag">ARMADURA LEVE · INVISÍVEL</span>
+    </div>
+
+    <div class="item-card armadura">
+      <div class="item-top">
+        <span class="item-num">37</span>
+        <span class="item-name">Colete Invisível Mk.II</span>
+        <span class="item-uses">8× usos de absorção</span>
+      </div>
+      <p class="item-desc">Versão aprimorada do Mk.I com fibras de dado de segunda geração. A proteção é maior, mas a durabilidade é ligeiramente menor devido à densidade do material. Muito procurado por Gladiadores DigiRider que precisam resistir a ataques pesados.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Concede <strong>RD 10</strong> contra ataques físicos e digitais. Cada absorção gasta 1 uso. Ao atingir 0 usos, se dissolve.</div>
+      <span class="item-tag">ARMADURA MÉDIA · INVISÍVEL</span>
+    </div>
+
+    <div class="item-card armadura">
+      <div class="item-top">
+        <span class="item-num">38</span>
+        <span class="item-name">Armadura Exo-Digital Leve</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Uma armadura externa composta por placas de dado cristalizado que envolve o torso e os membros. Visível, volumosa, mas extremamente resistente. É o equipamento padrão de Guardiões de Rede em missões de alto risco.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Concede <strong>RD 8</strong> permanente contra todos os ataques. Penalidade: <strong>–1 dado em testes de Movimento</strong> devido ao peso. Não combina com Colete Invisível.</div>
+      <span class="item-tag">ARMADURA PESADA · VISÍVEL</span>
+    </div>
+
+    <div class="item-card armadura">
+      <div class="item-top">
+        <span class="item-num">39</span>
+        <span class="item-name">Armadura Exo-Digital Pesada</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">A versão completa da Exo-Digital, cobrindo também cabeça, mãos e pés com placas de dado de alto grau. Usada em missões em zonas corrompidas ou confrontos com Digimon de estágio Perfeito e acima. Impõe mobilidade severamente limitada.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Concede <strong>RD 15</strong> permanente contra todos os ataques. Penalidade: <strong>–2 dados em testes de Movimento</strong> e <strong>–1 dado em Habilidade</strong>. Imune a efeitos de corrupção leve.</div>
+      <span class="item-tag">ARMADURA MUITO PESADA · VISÍVEL</span>
+    </div>
+
+    <div class="item-card armadura">
+      <div class="item-top">
+        <span class="item-num">40</span>
+        <span class="item-name">Manto de Espelho de Dados</span>
+        <span class="item-uses">5× usos de reflexão</span>
+      </div>
+      <p class="item-desc">Um manto feito de partículas de dado espelhadas que refletem ataques de energia digital. Raríssimo, produzido artesanalmente por Engenheiros de Digivice de elite. Cada manto é único e leva semanas para ser fabricado.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Quando um ataque de energia digital ou habilidade especial te acerta, role Habilidade. Com sucesso, o ataque é <strong>refletido de volta ao atacante</strong> com metade do dano original. Gasta 1 uso por reflexão.</div>
+      <span class="item-tag">ARMADURA ESPECIAL · RARO</span>
+    </div>
+
+    <div class="item-card armadura">
+      <div class="item-top">
+        <span class="item-num">41</span>
+        <span class="item-name">Botas de Movimento Digital</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Calçados reforçados com tecnologia de amortecimento de dados que permitem movimentos mais rápidos e seguros dentro da Cyberede. Podem aderir a qualquer superfície digital, incluindo paredes verticais e tetos, graças ao sistema de micropinos de dado integrado.</p>
+      <div class="item-effect"><strong>Efeito:</strong> <strong>+1 dado em todos os testes de Movimento</strong>. Permite escalar superfícies digitais sem necessidade de teste. Uma vez por sessão, pode executar um salto ou corrida de alcance impossível — o Mestre define o limite narrativo.</div>
+      <span class="item-tag">ACESSÓRIO · MOBILIDADE</span>
+    </div>
+
+    <div class="item-card armadura">
+      <div class="item-top">
+        <span class="item-num">42</span>
+        <span class="item-name">Luvas de Interface Neural</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Luvas recobertas de sensores de dado que amplificam a conexão entre o usuário e qualquer interface digital tocada. Muito usadas por Engenheiros de Digivice e Hackers para interações mais precisas com sistemas da Cyberede.</p>
+      <div class="item-effect"><strong>Efeito:</strong> <strong>+1 dado em testes de Habilidade e Inteligência</strong> envolvendo sistemas digitais. Hackear qualquer sistema custa 1 ação a menos. Ao tocar qualquer estrutura de dado, revela informações básicas sobre ela automaticamente.</div>
+      <span class="item-tag">ACESSÓRIO · TÉCNICO</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--                 RECUPERAÇÃO                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-title recuperacao">♥ Recuperação</span>
+    <span class="section-count">itens 43 – 47</span>
+  </div>
+  <div class="item-grid">
+
+    <div class="item-card recuperacao">
+      <div class="item-top">
+        <span class="item-num">43</span>
+        <span class="item-name">Injetor de Dado Vital</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Uma seringa digital que injeta energia vital de dado diretamente na estrutura de consciência do usuário dentro da Cyberede. O efeito é imediato e a sensação descrita por quem já usou é de um "reinício quente" — o corpo digital simplesmente se repara.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Restaura <strong>+10 HP</strong> imediatamente. Pode ser usado em combate gastando 1 ação.</div>
+      <span class="item-tag">CONSUMÍVEL · CURA</span>
+    </div>
+
+    <div class="item-card recuperacao">
+      <div class="item-top">
+        <span class="item-num">44</span>
+        <span class="item-name">Kit de Regeneração Digital</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Um kit médico adaptado para a Cyberede, contendo vários componentes de restauração de dado. Utilizado por Médicos de Campo e treinadores experientes que sabem que uma batalha pode virar do nada quando alguém está com HP crítico.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Restaura <strong>HP completo (20)</strong> do usuário ou de um aliado tocado. Requer 1 ação completa para usar. Não pode ser usado em combate.</div>
+      <span class="item-tag">CONSUMÍVEL · CURA TOTAL</span>
+    </div>
+
+    <div class="item-card recuperacao">
+      <div class="item-top">
+        <span class="item-num">45</span>
+        <span class="item-name">Pastilha de Estabilização</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Um comprimido de dado comprimido que estabiliza a estrutura de consciência de alguém que chegou a 0 HP, evitando a desconexão forçada da Cyberede. Funciona em questão de segundos — o suficiente para que alguém chegue para ajudar.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Usado em alguém com 0 HP. O alvo <strong>volta com 1 HP</strong> e fica estável — não cai novamente naquele turno. Pode ser autoaplicado se ainda estiver consciente ao chegar a 0 HP.</div>
+      <span class="item-tag">CONSUMÍVEL · ESTABILIZAÇÃO</span>
+    </div>
+
+    <div class="item-card recuperacao">
+      <div class="item-top">
+        <span class="item-num">46</span>
+        <span class="item-name">Bandagem de Dado</span>
+        <span class="item-uses">3× consumível</span>
+      </div>
+      <p class="item-desc">Tiras de energia de dado solidificada que envolvem ferimentos digitais e aceleram a regeneração da estrutura de consciência. Muito mais baratas e comuns que os kits completos, são o item básico de qualquer mochila de aventureiro experiente.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Restaura <strong>+5 HP</strong>. Pode ser usado em combate como ação livre uma vez por turno. Leve — ocupa apenas 1 espaço de equipamento.</div>
+      <span class="item-tag">CONSUMÍVEL · BARATO</span>
+    </div>
+
+    <div class="item-card recuperacao">
+      <div class="item-top">
+        <span class="item-num">47</span>
+        <span class="item-name">Antídoto de Dado</span>
+        <span class="item-uses">1× consumível</span>
+      </div>
+      <p class="item-desc">Uma solução que neutraliza efeitos negativos de dado aplicados sobre a consciência do usuário. Remove venenos digitais, paralisias, confusões e qualquer efeito de corrupção leve que esteja afetando a estrutura de consciência do alvo.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Remove <strong>todos os efeitos negativos ativos</strong> (veneno, paralisia, confusão, corrupção leve) do usuário ou de um aliado. Não remove efeitos de corrupção pesada da Zona Null.</div>
+      <span class="item-tag">CONSUMÍVEL · CURA DE STATUS</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--               ITENS ESPECIAIS                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-title especial">✦ Itens Especiais</span>
+    <span class="section-count">itens 48 – 50</span>
+  </div>
+  <div class="item-grid">
+
+    <div class="item-card especial">
+      <div class="item-top">
+        <span class="item-num">48</span>
+        <span class="item-name">Mapa Fantasma de Datahaven</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Um mapa holográfico que atualiza automaticamente conforme o usuário explora a Cyberede. Mas diferente dos mapas comuns, este registra também locais que tecnicamente não deveriam existir — ruínas sem cadastro, rotas de Trailmon não oficiais e entradas para regiões seladas. Ninguém sabe quem o criou.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Revela locais ocultos, rotas secretas e entradas proibidas em qualquer região de Datahaven à medida que o grupo as visita. O Mestre deve revelar ao portador a existência de passagens ocultas sempre que o grupo se aproximar delas. Insubstituível para Exploradores e Arqueólogos.</div>
+      <span class="item-tag">UTILITÁRIO · EXPLORAÇÃO · RARO</span>
+    </div>
+
+    <div class="item-card especial">
+      <div class="item-top">
+        <span class="item-num">49</span>
+        <span class="item-name">Diário de Fusão</span>
+        <span class="item-uses">∞ Permanente</span>
+      </div>
+      <p class="item-desc">Um caderno digital de registro pessoal que documenta automaticamente cada fusão DigiRider realizada pelo portador. Com o tempo, os registros começam a revelar padrões — e o Diário começa a sugerir melhorias. Como se alguém o tivesse programado para evoluir junto com o usuário.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Após cada fusão DigiRider, ganha <strong>+5 de Energia de Fusão bônus</strong> permanente ao máximo do Digivice (acumula até +30 ao longo das sessões). Também registra fraquezas de inimigos derrotados na forma fundida — consultável pelo Mestre.</div>
+      <span class="item-tag">PROGRESSIVO · FUSÃO</span>
+    </div>
+
+    <div class="item-card especial">
+      <div class="item-top">
+        <span class="item-num">50</span>
+        <span class="item-name">Núcleo Vazio — Fragmento da Zona Null</span>
+        <span class="item-uses">1× por arco · Perigoso</span>
+      </div>
+      <p class="item-desc">Um fragmento de dado corrompido coletado nas fronteiras da Zona Null. Sua simples presença interfere nos sensores ao redor e causa desconforto em Digimon próximos. Carregá-lo é legal — mas moralmente questionável. Pesquisadores da Corporação Datahaven pagam fortunas por amostras como essa.</p>
+      <div class="item-effect"><strong>Efeito:</strong> Ao ativar, libera uma onda de corrupção da Zona Null em área. Todos os Digimon na cena sofrem <strong>–2 dados em todos os testes por 3 turnos</strong> e não podem usar Poderes Especiais no próximo turno. O portador humano sofre <strong>–5 HP</strong> por uso devido à exposição. Digimon parceiro também é afetado — avise-o antes.</div>
+      <span class="item-tag">PERIGOSO · CORRUPÇÃO · LENDÁRIO</span>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
+
+        <h2>Itens</h2>
+        <p>Seu código de itens entra aqui.</p>
+    </div>
+
+    <!-- Conteúdo: PROFISSÕES -->
+    <div id="profissoes" class="tab-content">
+        <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profissões — DigiRider RPG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #0a0c10;
+    --panel: #0f1218;
+    --border: #1e2530;
+    --text: #d8dde6;
+    --text-dim: #6b7585;
+    --gold: #c9a84c;
+
+    --c1: #3ecfcf;   /* Explorador */
+    --c2: #e05555;   /* Guardião */
+    --c3: #4ecb71;   /* Domador */
+    --c4: #c97de8;   /* Condutor */
+    --c5: #f5c842;   /* Arqueólogo */
+    --c6: #e8934a;   /* Caçador */
+    --c7: #5b9ef5;   /* Engenheiro */
+    --c8: #e05555;   /* Gladiador */
+    --c9: #c97de8;   /* Mediador */
+    --c10: #3ecfcf;  /* Sentinela */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 32px 20px;
+  }
+
+  h1 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 26px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-top: 3px solid;
+    padding: 22px 22px 18px;
+    position: relative;
+  }
+
+  /* top border color per card */
+  .card:nth-child(1)  { border-top-color: var(--c1);  }
+  .card:nth-child(2)  { border-top-color: var(--c2);  }
+  .card:nth-child(3)  { border-top-color: var(--c3);  }
+  .card:nth-child(4)  { border-top-color: var(--c4);  }
+  .card:nth-child(5)  { border-top-color: var(--c5);  }
+  .card:nth-child(6)  { border-top-color: var(--c6);  }
+  .card:nth-child(7)  { border-top-color: var(--c7);  }
+  .card:nth-child(8)  { border-top-color: var(--c8);  }
+  .card:nth-child(9)  { border-top-color: var(--c9);  }
+  .card:nth-child(10) { border-top-color: var(--c10); }
+
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .card-number {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .card:nth-child(1)  .card-title { color: var(--c1);  }
+  .card:nth-child(2)  .card-title { color: var(--c2);  }
+  .card:nth-child(3)  .card-title { color: var(--c3);  }
+  .card:nth-child(4)  .card-title { color: var(--c4);  }
+  .card:nth-child(5)  .card-title { color: var(--c5);  }
+  .card:nth-child(6)  .card-title { color: var(--c6);  }
+  .card:nth-child(7)  .card-title { color: var(--c7);  }
+  .card:nth-child(8)  .card-title { color: var(--c8);  }
+  .card:nth-child(9)  .card-title { color: var(--c9);  }
+  .card:nth-child(10) .card-title { color: var(--c10); }
+
+  .card-subtitle {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: #a0aab8;
+    line-height: 1.6;
+    border-left: 2px solid var(--border);
+    padding-left: 12px;
+    margin-bottom: 16px;
+  }
+
+  .vantagens-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .vantagens {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .vantagem {
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    gap: 10px;
+    align-items: start;
+    border-top: 1px solid var(--border);
+    padding: 9px 0;
+  }
+
+  .v-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 1px;
+  }
+
+  .v-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .card:nth-child(1)  .v-dot { background: var(--c1);  }
+  .card:nth-child(2)  .v-dot { background: var(--c2);  }
+  .card:nth-child(3)  .v-dot { background: var(--c3);  }
+  .card:nth-child(4)  .v-dot { background: var(--c4);  }
+  .card:nth-child(5)  .v-dot { background: var(--c5);  }
+  .card:nth-child(6)  .v-dot { background: var(--c6);  }
+  .card:nth-child(7)  .v-dot { background: var(--c7);  }
+  .card:nth-child(8)  .v-dot { background: var(--c8);  }
+  .card:nth-child(9)  .v-dot { background: var(--c9);  }
+  .card:nth-child(10) .v-dot { background: var(--c10); }
+
+  .v-level {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    background: #1a1800;
+    border: 1px solid #3a3010;
+    padding: 1px 5px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .v-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .v-text strong {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .v-restriction {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<h1>◈ Profissões — DigiRider RPG</h1>
+<p class="subtitle">// 10 PROFISSÕES · 3 VANTAGENS CADA · NÍVEIS 1, 2 E 3</p>
+
+<div class="grid">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 1. EXPLORADOR DE DADOS                -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">01</span>
+      <span class="card-title">Explorador de Dados</span>
+      <span class="card-subtitle">DATA EXPLORER</span>
+    </div>
+    <p class="card-desc">
+      Aventureiros especializados em mapear regiões desconhecidas do Nexus-0. Viajam para ruínas digitais esquecidas e territórios perigosos, atualizando mapas de Datahaven e descobrindo novos recursos, espécies de Digimon e anomalias digitais. Muitos são vistos como heróis modernos — outros, como caçadores de tesouros digitais.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Cartógrafo Nato:</strong> ao entrar em uma área nova da Cyberede, role Sentidos automaticamente para revelar saídas ocultas, armadilhas de dados e recursos do ambiente. Não requer ação.
+          <div class="v-restriction">[ Passivo — 1× por área ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Rastro de Dados:</strong> em regiões já visitadas, você e seus aliados nunca se perdem. Além disso, pode compartilhar o mapa mental com aliados, concedendo a eles +1 dado em testes de Movimento dentro daquela área pela sessão inteira.
+          <div class="v-restriction">[ Passivo ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Descoberta Lendária:</strong> ao explorar uma ruína ou área inédita, role Inteligência. Com sucesso, encontre um item raro, fragmento de dado antigo ou informação exclusiva que o Mestre deve revelar. Só pode ser usada em locais nunca antes visitados por nenhum jogador.
+          <div class="v-restriction">[ 1× por arco narrativo ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 2. GUARDIÃO DE REDE                   -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">02</span>
+      <span class="card-title">Guardião de Rede</span>
+      <span class="card-subtitle">NET GUARDIAN</span>
+    </div>
+    <p class="card-desc">
+      Policiais e defensores da Cyberede. Combatem Digimon hostis, falhas digitais, ataques de hackers e ameaças à estabilidade das cidades virtuais. Frequentemente recrutados entre DigiRiders experientes, possuem autorização para agir em situações de emergência.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Autoridade da Rede:</strong> em cidades e áreas patrulhadas da Cyberede, sua palavra tem peso oficial. PNJs civis e comerciantes cooperam com você sem necessidade de teste social. Guarda-costas ou reforços básicos podem ser solicitados ao Mestre uma vez por sessão.
+          <div class="v-restriction">[ Passivo + 1× por sessão ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Protocolo de Emergência:</strong> ao detectar uma ameaça ativa (anomalia, Digimon hostil, hacker), ative o protocolo para isolar a área. Inimigos dentro da zona isolada têm –1 dado em testes de Movimento por 3 turnos. Aliados ficam imunes ao efeito.
+          <div class="v-restriction">[ 1× por combate ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Força Total:</strong> acione reforços da rede. Um esquadrão de Guardiões NPCs aparece na cena em 2 turnos, com atributos básicos e 1 habilidade de combate cada. Eles agem de forma autônoma sob suas ordens gerais por toda a cena.
+          <div class="v-restriction">[ 1× por sessão ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 3. DOMADOR DE EVOLUÇÃO                -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">03</span>
+      <span class="card-title">Domador de Evolução</span>
+      <span class="card-subtitle">EVOLUTION TAMER</span>
+    </div>
+    <p class="card-desc">
+      Especialistas em estudar Digievoluções e caminhos evolutivos raros. Trabalham em laboratórios e centros de pesquisa, ajudando parceiros Digimon a alcançar formas nunca antes registradas. São responsáveis por catalogar novas evoluções e investigar fenômenos ligados à Energia de Fusão.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Acumulador de Energia:</strong> seu Digimon acumula o dobro de pontos de Energia de Digievolução ao vencer combates ou concluir missões.
+          <div class="v-restriction">[ Passivo ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Análise Evolutiva:</strong> antes de uma batalha, role Inteligência para identificar o próximo estágio evolutivo do Digimon inimigo e suas possíveis formas. O Mestre revela o nome e o elemento da evolução seguinte. Seus aliados ganham +1 dado contra aquela forma.
+          <div class="v-restriction">[ 1× por combate ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Evolução Acelerada:</strong> uma vez por arco, seu Digimon pode realizar uma Digievolução extraordinária — saltando para uma forma ainda não catalogada, com atributos aumentados em +1 estágio e uma nova habilidade especial definida junto ao Mestre.
+          <div class="v-restriction">[ 1× por arco narrativo ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 4. CONDUTOR DE TRILHOS                -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">04</span>
+      <span class="card-title">Condutor de Trilhos</span>
+      <span class="card-subtitle">TRAILMASTER</span>
+    </div>
+    <p class="card-desc">
+      Profissionais responsáveis pela operação das rotas dos Trailmon. Viajam constantemente entre cidades e regiões remotas, transportando passageiros, recursos e informações. Por conhecerem praticamente todo Datahaven, costumam ser excelentes guias e fontes valiosas de informação.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Conhecedor das Rotas:</strong> você e seu grupo sempre têm acesso gratuito ao transporte via Trailmon, sem custo ou espera. Além disso, conhece atalhos: reduza em 1 cena o tempo de viagem entre quaisquer dois pontos de Datahaven.
+          <div class="v-restriction">[ Passivo ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Rede de Informações:</strong> por transitar tanto por Datahaven, você ouve de tudo. Uma vez por sessão, pergunte ao Mestre sobre qualquer evento, localização ou PNJ em Datahaven. O Mestre é obrigado a fornecer ao menos uma pista verídica.
+          <div class="v-restriction">[ 1× por sessão ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Rota Proibida:</strong> você conhece trilhos antigos que não constam em nenhum mapa oficial. Pode levar o grupo a uma região secreta, ruína esquecida ou área restrita da Cyberede sem acionar alertas ou guardas. O Mestre define o que há lá, mas a entrada é garantida.
+          <div class="v-restriction">[ 1× por arco narrativo ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 5. ARQUEÓLOGO DIGITAL                 -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">05</span>
+      <span class="card-title">Arqueólogo Digital</span>
+      <span class="card-subtitle">DATA ARCHAEOLOGIST</span>
+    </div>
+    <p class="card-desc">
+      Pesquisadores especializados em ruínas antigas do Nexus-0. Estudam estruturas que existiam antes da chegada dos humanos à Cyberede. São os que mais se aproximam de descobrir a verdade sobre a origem do Nexus-0 e da misteriosa Zona Null.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Leitura de Ruínas:</strong> ao entrar em qualquer estrutura antiga ou região do pré-Contato, role Inteligência para decifrar inscrições, padrões de dados e registros esquecidos. Com sucesso, o Mestre revela uma informação sobre a história daquele local.
+          <div class="v-restriction">[ Passivo — 1× por local ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Fragmento Antigo:</strong> ao explorar ruínas, você tem chance de encontrar um Fragmento de Dado Antigo — um item utilizável que concede +2 dados em um único teste ou +15 de Energia de Fusão ao ser consumido. O Mestre define a quantidade encontrada por sessão (máx. 2).
+          <div class="v-restriction">[ Passivo — Mestre arbitra ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Memória do Nexus:</strong> uma vez por arco, ao contato com uma relíquia ou ruína poderosa, acesse uma visão do passado do Nexus-0. O Mestre narra um evento histórico real da Cyberede, podendo revelar segredos sobre a Zona Null, os Guardiões ou eventos que nenhum outro personagem sabe.
+          <div class="v-restriction">[ 1× por arco narrativo ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 6. CAÇADOR DE ANOMALIAS               -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">06</span>
+      <span class="card-title">Caçador de Anomalias</span>
+      <span class="card-subtitle">ANOMALY HUNTER</span>
+    </div>
+    <p class="card-desc">
+      Especialistas que investigam fenômenos estranhos da rede — falhas temporais, regiões corrompidas, Digimon desconhecidos e eventos impossíveis. Considerados excêntricos, frequentemente trabalham sozinhos e são os primeiros a perceber quando algo está errado com o Nexus-0.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Detector de Anomalias:</strong> você percebe automaticamente quando uma área está corrompida, instável ou anômala antes de entrar nela. Nunca é surpreendido por falhas ambientais ou armadilhas de dado. Adicione +1 dado em testes dentro de áreas anômalas.
+          <div class="v-restriction">[ Passivo ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Estabilizador de Dados:</strong> pode tentar estabilizar uma anomalia ativa (falha, corrupção, portal instável) com um teste de Inteligência. Com sucesso, a anomalia é neutralizada por 1 cena, abrindo passagem segura para todos os aliados.
+          <div class="v-restriction">[ 1× por cena ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Exploração do Impossível:</strong> pode entrar em regiões corrompidas ou instáveis que bloqueariam qualquer outro personagem, incluindo zonas próximas à Zona Null. Lá dentro, tem +2 dados em todos os testes. Cada entrada desse tipo revela ao Mestre uma pista sobre a grande ameaça do arco atual.
+          <div class="v-restriction">[ 1× por arco narrativo ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 7. ENGENHEIRO DE DIGIVICES            -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">07</span>
+      <span class="card-title">Engenheiro de Digivices</span>
+      <span class="card-subtitle">DIGIVICE ENGINEER</span>
+    </div>
+    <p class="card-desc">
+      Mestres da tecnologia híbrida entre humanos e Digimon. Criam Digivices personalizados, equipamentos de realidade aumentada e sistemas de fusão. Os melhores engenheiros são tratados como celebridades dentro da comunidade DigiRider e suas criações podem mudar o rumo de batalhas inteiras.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Digivice Personalizado:</strong> seu Digivice possui uma modificação exclusiva. Escolha um bônus permanente: +10 de capacidade máxima de Energia de Digievolução, +10 de capacidade máxima de Energia de Fusão, ou +1 slot extra de equipamento.
+          <div class="v-restriction">[ Passivo — escolha ao criar o personagem ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Manutenção de Campo:</strong> pode reparar ou modificar equipamentos de aliados durante uma cena de descanso. Restaure todos os usos de 1 equipamento quebrado, ou conceda +1 uso extra a qualquer equipamento por sessão. Role Inteligência; com falha crítica, o item sofre uma falha menor (Mestre decide).
+          <div class="v-restriction">[ 2× por sessão ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Protótipo Experimental:</strong> uma vez por arco, crie um equipamento único e experimental. Descreva o que ele faz ao Mestre (dentro do razoável para o nível da campanha) e role Inteligência. Com sucesso, o item funciona perfeitamente. Com falha, funciona com um efeito colateral inesperado — mas ainda funciona.
+          <div class="v-restriction">[ 1× por arco narrativo ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 8. GLADIADOR DIGIRIDER                -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">08</span>
+      <span class="card-title">Gladiador DigiRider</span>
+      <span class="card-subtitle">DIGIRIDER GLADIATOR</span>
+    </div>
+    <p class="card-desc">
+      Combatentes profissionais que participam de torneios oficiais da Cyberede. Vivem treinando para fortalecer o vínculo com seus parceiros e aperfeiçoar suas fusões. Alguns buscam fama, outros dinheiro — mas todos sonham em alcançar o topo dos rankings mundiais de DigiRiders.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Instinto de Arena:</strong> em qualquer combate formal ou duelo oficial, você e seu Digimon sempre agem primeiro no turno inicial. Além disso, ganhe +5 de Energia de Fusão automaticamente ao iniciar um combate.
+          <div class="v-restriction">[ Passivo ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Pressão de Campeão:</strong> ao vencer um combate ou derrotar um inimigo notável, ganhe +15 de Energia de Fusão imediatamente. Se já estiver na forma DigiRider, adicione +1 dado em todos os testes pelo próximo turno.
+          <div class="v-restriction">[ Passivo ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Modo Torneio:</strong> declare antes de um combate que está entrando no Modo Torneio. Por toda a duração desse combate, o custo de manutenção da fusão DigiRider é reduzido à metade e cada golpe bem-sucedido na forma fundida gera +5 de Energia de Fusão em vez de consumir.
+          <div class="v-restriction">[ 1× por sessão ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 9. MEDIADOR DE CONFLITOS              -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">09</span>
+      <span class="card-title">Mediador de Conflitos</span>
+      <span class="card-subtitle">DIGITAL ARBITRATOR</span>
+    </div>
+    <p class="card-desc">
+      Profissionais treinados para resolver disputas entre cidades, organizações e grupos rivais através de desafios oficiais da Cyberede. Sua atuação foi uma das principais razões para a redução das guerras no mundo físico. Respeitados como diplomatas por humanos e Digimon.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Zona Neutra:</strong> pode declarar uma trégua formal em qualquer situação de conflito. Enquanto a trégua estiver ativa (até 1 cena), nenhum lado pode atacar sem violar as leis da Cyberede — o que traz penalidades sociais graves. Funciona mesmo contra inimigos que te odeiam, desde que reconheçam as regras da rede.
+          <div class="v-restriction">[ 1× por sessão ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Desafio Oficial:</strong> substitua qualquer conflito violento por um desafio formal da Cyberede (duelo, competição, prova de habilidade). O perdedor deve respeitar os termos negociados por você. Role Inteligência para propor os termos; oponentes têm –1 dado para recusar se você tiver reputação estabelecida.
+          <div class="v-restriction">[ 1× por sessão ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Voz da Paz:</strong> sua reputação diplomática é reconhecida globalmente. Pode convocar uma sessão oficial de mediação que obriga facções rivais inteiras a participar. O resultado dessa sessão pode mudar alianças, abrir novos locais ou resolver conflitos de nível de arco. O Mestre deve levar o resultado a sério na narrativa.
+          <div class="v-restriction">[ 1× por arco narrativo ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 10. SENTINELA DO HORIZONTE            -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">10</span>
+      <span class="card-title">Sentinela do Horizonte</span>
+      <span class="card-subtitle">HORIZON SENTINEL</span>
+    </div>
+    <p class="card-desc">
+      Uma das profissões mais raras e perigosas do Nexus-0. Os Sentinelas monitoram as fronteiras conhecidas do mundo digital, observando regiões instáveis próximas à Zona Null e outros territórios proibidos. Poucos permanecem por muito tempo. Os que retornam trazem relatos que desafiam tudo o que se sabe sobre o Nexus-0.
+    </p>
+    <div class="vantagens-label">◆ Vantagens de Profissão</div>
+    <div class="vantagens">
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 1</span></div>
+        <div class="v-text">
+          <strong>Olhos do Abismo:</strong> você enxerga além do que os outros conseguem ver. Detecta presenças ocultas, entidades da Zona Null e anomalias invisíveis automaticamente ao se aproximar delas. Nunca é surpreendido por criaturas de regiões proibidas e tem +1 dado contra elas.
+          <div class="v-restriction">[ Passivo ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 2</span></div>
+        <div class="v-text">
+          <strong>Resistência ao Vazio:</strong> exposição à corrupção da Zona Null não afeta você como afeta outros. Efeitos de corrupção digital, falhas temporais e distorções espaciais têm seus danos e penalidades reduzidos à metade contra você. Aliados adjacentes recebem 25% de redução.
+          <div class="v-restriction">[ Passivo ]</div>
+        </div>
+      </div>
+      <div class="vantagem">
+        <div class="v-badge"><span class="v-dot"></span><span class="v-level">Nível 3</span></div>
+        <div class="v-text">
+          <strong>Além do Horizonte:</strong> você já esteve tão perto da Zona Null que carrega fragmentos daquilo em si. Uma vez por arco, acesse brevemente o poder desse vazio: por 1 turno, torne-se imaterial — ataques físicos e digitais passam por você. Ao retornar, descarregue a energia acumulada em um único ataque que ignora toda resistência do alvo.
+          <div class="v-restriction">[ 1× por arco narrativo ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
+        <h2>Profissões</h2>
+        <p>Seu código de profissões entra aqui.</p>
+    </div>
+</div>
+
+<script>
+    function switchTab(evt, tabId) {
+        var contents = document.getElementsByClassName("tab-content");
+        for (var i = 0; i < contents.length; i++) { contents[i].classList.remove("active"); }
+        var buttons = document.getElementsByClassName("tab-btn");
+        for (var i = 0; i < buttons.length; i++) { buttons[i].classList.remove("active"); }
+        document.getElementById(tabId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+</body>
+</html>
